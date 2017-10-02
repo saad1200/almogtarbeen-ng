@@ -1,0 +1,30 @@
+<p-panel i18n-header="@@loginHeader" header="Login">
+        
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
+
+        <div class="ui-g">
+                <div class="ui-g-12" *ngIf="error">{{error}}</div>
+        </div>        
+
+        <div class="ui-g">
+            <label for="email" class="ui-g-12" i18n="@@email" >Email i18n!</label>
+            <input id="email" type="email" class="ui-g-12" name="email" [(ngModel)]="userCredential.email" #email="ngModel" required/>
+            <div [hidden]="email.valid || email.pristine">Email is required.</div>
+        </div>
+
+        <div class="ui-g">
+            <label for="password" class="ui-g-12" i18n="@@password" >Password i18n!</label>
+            <input id="password" name="password" type="password" class="ui-g-12" [(ngModel)]="userCredential.password" #password="ngModel" required/>
+            <div [hidden]="password.valid || password.pristine">Password is required.</div>
+        </div>
+
+        <div class="ui-g">
+            <button class="ui-g-12" [disabled]="loginForm.invalid" i18n="@@next">Next i18n!</button>
+            <a routerLink="/register" class="ui-g-12" i18n="@@registerNewUser">Register new user i18n!</a>
+        </div>
+
+
+
+    </form>          
+
+</p-panel>

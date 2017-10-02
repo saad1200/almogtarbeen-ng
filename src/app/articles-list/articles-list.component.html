@@ -1,0 +1,7 @@
+<p-dataTable [value]="articles" 
+    emptyMessage="No articles found"
+    selectionMode="single"
+    (onRowSelect)="onRowSelect($event)">
+    <p-column field="title" header="Title"></p-column>
+    <p-column field="summary" header="Summary"></p-column>
+</p-dataTable>
