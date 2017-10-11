@@ -4,11 +4,11 @@ import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 
 import { UserCredential } from './user.credential.model'
-
+import { LoginStatusService } from '../login-status.service'
 
 @Injectable()
 export class AuthenticationService{
-    constructor (private http: Http) {
+    constructor (private http: Http, private loginStatusService: LoginStatusService) {
 
     }
 
@@ -19,6 +19,7 @@ export class AuthenticationService{
                         let user = res.json();
                         if(user && user.token) {
                             localStorage.setItem('currentUser', JSON.stringify(user));
+                            this.loginStatusService.changed();
                         }
                         return user;
                    });
@@ -26,5 +27,6 @@ export class AuthenticationService{
 
     logout() {
         localStorage.removeItem('currentUser');
+        this.loginStatusService.changed();
     }
  }

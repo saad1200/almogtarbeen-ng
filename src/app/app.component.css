@@ -50,7 +50,7 @@ a:-webkit-any-link {
   }
   
   #header {
-    background-color: #20272a;
+    /* background-color: #20272a; */
     height: 60px;
     position: fixed;
     top: 0;
@@ -119,3 +119,4 @@ a:-webkit-any-link {
       display: block;
     }
   }
+  

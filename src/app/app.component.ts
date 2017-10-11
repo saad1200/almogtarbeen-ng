@@ -2,6 +2,8 @@ import {Component, OnInit, ViewChild, ElementRef, AfterViewInit} from '@angular/
 import {MenuItem} from "primeng/primeng";
 import {Menu} from "primeng/components/menu/menu";
 import {ActivatedRoute, Router} from "@angular/router";
+import { AuthenticationService } from './user-membership/user-login/authentication.service';
+import { LoginStatusService } from './user-membership/login-status.service';
 
 declare var jQuery :any;
 
@@ -10,59 +12,64 @@ declare var jQuery :any;
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit {
 
   menuItems: MenuItem[];
-  miniMenuItems: MenuItem[];
 
   @ViewChild('bigMenu') bigMenu : Menu;
   @ViewChild('smallMenu') smallMenu : Menu;
 
-  constructor(private router : Router) {
+  constructor(
+    private router : Router, 
+    private authenticationService: AuthenticationService,
+    private loginStatusService: LoginStatusService) {
 
   }
 
   ngOnInit() {
+    this.buildMenu();
+    this.loginStatusService.onChange().subscribe(() => this.buildMenu());
+  }
 
-    let handleSelected = function(event) {
-      let allMenus = jQuery(event.originalEvent.target).closest('ul');
-      let allLinks = allMenus.find('.menu-selected');
+  buildMenu() {
+    this.menuItems = [];
 
-      allLinks.removeClass("menu-selected");
-      let selected = jQuery(event.originalEvent.target).closest('a');
-      selected.addClass('menu-selected');
+    this.menuItems.push({
+          label: 'جريدة صوت المغتربين',
+          icon: 'fa-home',
+          routerLink: [''],
+          styleClass: 'menuitem'
+      }
+    );
+
+    let user = JSON.parse(localStorage.getItem('currentUser'));
+    if(user) {
+      this.menuItems.push({
+          label: 'صفحتي',
+          icon: 'fa-id-card-o',
+          routerLink: ['/dashboard/' + user.id]
+      });
+
+      this.menuItems.push({
+          label: 'إضافة مقالة',
+          icon: 'fa-plus-square-o',
+          routerLink: ['/article/create']
+      });
+      
+      this.menuItems.push({
+          label: 'تسجيل الخروج',
+          icon: 'fa-sign-out',
+          routerLink: [''],
+          command: (event) => this.authenticationService.logout()
+      });
+    } else {
+      this.menuItems.push({
+        label: 'تسجيل الدخول',
+        icon: 'fa-sign-in',
+        routerLink: ['/login'],
+        command: (event) => this.authenticationService.logout()
+      });
     }
-
-    this.menuItems = [
-      {label: 'Dashboard', icon: 'fa-home', routerLink: ['/dashboard'], command: (event) => handleSelected(event)},
-      {label: 'All Times', icon: 'fa-calendar', routerLink: ['/alltimes'], command: (event) => handleSelected(event)},
-      {label: 'My Timesheet', icon: 'fa-clock-o', routerLink: ['/timesheet'], command: (event) => handleSelected(event)},
-      {label: 'Add Project', icon: 'fa-tasks', routerLink: ['/projects'], command: (event) => handleSelected(event)},
-      {label: 'My Profile', icon: 'fa-users', routerLink: ['/profile'], command: (event) => handleSelected(event)},
-      {label: 'Settings', icon: 'fa-sliders', routerLink: ['/settings'], command: (event) => handleSelected(event)},
-    ]
-
-    this.miniMenuItems = [];
-    this.menuItems.forEach( (item : MenuItem) => {
-      let miniItem = { icon: item.icon, routerLink: item.routerLink }
-      this.miniMenuItems.push(miniItem);
-    })
-
   }
-
-  selectInitialMenuItemBasedOnUrl() {
-    let path = document.location.pathname;
-    let menuItem = this.menuItems.find( (item) => { return item.routerLink[0] == path });
-    if (menuItem) {
-      let selectedIcon = this.bigMenu.container.querySelector(`.${menuItem.icon}`);
-      jQuery(selectedIcon).closest('li').addClass('menu-selected');
-    }
-  }
-
-  ngAfterViewInit() {
-    this.selectInitialMenuItemBasedOnUrl();
-  }
-
-
 
 }

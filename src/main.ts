@@ -3,7 +3,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
-import { TRANSLATION } from './locale/messages.es';
+import { TRANSLATION } from './locale/messages.ar';
 
 if (environment.production) {
   enableProdMode();

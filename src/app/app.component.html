@@ -1,57 +1,31 @@
 <div class="ui-rtl" dir="rtl">
-<div class="ui-g ui-g-nopad" id="header">
-
-    <div class="ui-g-10 ui-g-nopad">
-        <ul class="topbar-menu">
-            <li>
-                <a routerLink="/" routerLinkActive="active">جريدة صوت المغتربين</a>
-            </li>
-        </ul>
+  <div class="ui-g ui-g-nopad" id="header">
+      <div class="ui-g-12">
+          <p-menubar #bigMenu [model]="menuItems"></p-menubar>
       </div>
-      <div class="ui-g-2 ui-g-nopad">
-        <ul class="topbar-menu">
-            <li>
-                <a routerLink="/login" routerLinkActive="active">تسجيل الدخول</a>
-            </li>
-        </ul>
+
+  </div>
+      
+  <div class="ui-g ui-g-nopad">
+
+    <div class="ui-g-2 ui-g-nopad" id="sidegutter">
+      
     </div>
 
-    <!-- <div class="ui-g-1" id="notifications"></div> -->
+    <div class="ui-g-2 ui-g-nopad" id="minigutter">
 
-    <!-- <div class="ui-g-1">  -->
-        <!-- <a routerLink="/login" routerLinkActive="active">تسجيل الدخول</a>           -->
-        <!-- <p-menubar #bigMenu [model]="menuItems"></p-menubar> -->
-    <!-- </div>
-    <div class="ui-g-9"> </div>
-    <div class="ui-g-1" id="notifications"></div> -->
-</div>
-    
-    <div class="ui-g ui-g-nopad">
-    
-      <div class="ui-g-2 ui-g-nopad" id="sidegutter">
-    
-        <!-- <div id="sidenav">
-    
-          <p-menu #bigMenu [model]="menuItems"></p-menu>
-    
-        </div> -->
-    
-      </div>
-    
-      <div class="ui-g-2 ui-g-nopad" id="minigutter">
-    
-        <!-- <div id="sidenav-mini">
-    
-          <p-menu #smallMenu [model]="miniMenuItems"></p-menu>
-    
-        </div> -->
-    
-      </div>
-        
-      <div id="content-body" class="ui-g-10 ui-g-nopad">
-    
-        <router-outlet></router-outlet>
-    
-      </div>
+      <!-- <div id="sidenav-mini">
+
+        <p-menu #smallMenu [model]="miniMenuItems"></p-menu>
+
+      </div> -->
+
+    </div>
+      
+    <div id="content-body" class="ui-g-10 ui-g-nopad">
+
+      <router-outlet></router-outlet>
+
     </div>
   </div>
+</div>
